@@ -12,20 +12,9 @@ object Api {
     val okHttpClient = OkHttpClient()
     var serverUrl = "http://ipv6.ffshaozi.top:8080"
     val logger: Logger = LoggerFactory.getLogger("Api")
-    suspend fun nowPlay(id: String): CurrentGamingServer? {
-        getUser(id)?.let {
-            fromJson<GatewayPID>(it)?.let {
-                it.personas?.persona?.firstOrNull()?.personaId?.let {
-                    getNowPlay(it)?.let {
-                        return fromJson<CurrentGamingServer>(it)
-                    }
-                }
-            }
-        }
-        return null
-    }
 
-    suspend fun getNowPlay(pid: Long): String? {
+
+    fun getNowPlay(pid: Long): String? {
         val request = Request.Builder()
             .url("${serverUrl}/gateway/nowPlay/$pid")
             .get()
@@ -43,7 +32,7 @@ object Api {
         }
     }
 
-    suspend fun getUser(id: String): String? {
+    fun getUser(id: String): String? {
         val request = Request.Builder()
             .url("${serverUrl}/gateway/getUser/$id")
             .get()
