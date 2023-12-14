@@ -77,7 +77,7 @@ fun cmd(cmd: List<String>) {
                                                     oldPlay = it
                                                 }
                                             }
-                                            if (it.result?.getOrDefault(pid,pid) == null && oldPlay != "大厅"){
+                                            if (it.result?.getOrDefault(pid,null) == null && oldPlay != "大厅"){
                                                 oldPlay = "大厅"
                                                 logger.info("玩家 {} 正在游戏大厅或离线",id)
                                             }
