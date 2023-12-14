@@ -48,9 +48,9 @@ fun cmd(cmd: List<String>) {
         } else {
             cs.launch {
                 Api.getUser(id)?.let {
-                    Api.fromJson<GatewayPID>(it)?.let {
-                        it.personas?.persona?.firstOrNull()?.personaId?.let { pid ->
-                            logger.info("搜索玩家成功 PID:{} ID:{}", pid, id)
+                    Api.fromJson<GatewayPID>(it)?.let {gwi->
+                        gwi.personas?.persona?.firstOrNull()?.personaId?.let { pid ->
+                            logger.info("搜索玩家成功 PID:{} ID:{} 最后上线时间:{}", pid, id,gwi.personas.persona.first().lastAuthenticated)
                             jobs.add(id).takeIf { it }.let {
                                 var oldPlay = ""
                                 while (jobs.any { id == it }) {
@@ -76,6 +76,10 @@ fun cmd(cmd: List<String>) {
                                                 it.value?.gameId?.let {
                                                     oldPlay = it
                                                 }
+                                            }
+                                            if (it.result?.getOrDefault(pid,pid) == null && oldPlay != "大厅"){
+                                                oldPlay = "大厅"
+                                                logger.info("玩家 {} 正在游戏大厅或离线",id)
                                             }
                                         }
                                     }
