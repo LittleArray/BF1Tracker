@@ -13,13 +13,13 @@ var jobs = mutableSetOf<String>()
 val logger: Logger = LoggerFactory.getLogger("Tracker")
 fun main(args: Array<String>) {
     logger.debug("Program arguments: ${args.joinToString()}")
-    logger.info("""
+    println("""
         
         BF1Tracker v1 by LittleArray
         使用方法,输入需要跟踪玩家的ID即可
         .rm 移除全部跟踪
         .cdn 无法连接网络使用该命令
-    """.trimIndent())
+    """)
     val scanner = Scanner(System.`in`)
     while (true) {
         cmd(scanner.nextLine().split(" "))
